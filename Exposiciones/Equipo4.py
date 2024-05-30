@@ -1,4 +1,4 @@
-import os
+import os, re
 
 # Ejercicio exposicion
 
@@ -93,12 +93,22 @@ def leer_combinaciones(archivo):
 
     return numeros
 
-nombre_archivo = 'Exposiciones\ganadores_chispazo.txt'
+#Ejercicio 3
 
-grupos = leer_combinaciones(nombre_archivo)
+palabras = {}
+cadena = input("Ingrese una oracion para determinar el numero de palabras unicas en ella: ")
 
-for grupo, combinaciones in grupos.items():
-    print(f'Combinaciones {grupo}:')
-    for combinacion, conteo in combinaciones.items():
-        print(f'{combinacion}: {conteo}')
-    print()
+# Eliminar caracteres especiales usando expresiones regulares
+split = re.findall(r'\b\w+\b', cadena.lower())
+
+for palabra in split:
+    if palabra in palabras:
+        palabras[palabra] = {'cantidad': palabras[palabra]['cantidad'] + 1}
+    else:
+        palabras[palabra] = {'cantidad': 1}
+
+print("PALABRA  CANTIDAD")
+for palabra, datos in palabras.items():
+    print(f"{palabra:<8} {datos['cantidad']:<7}")
+
+print(f'Numero de palabras unicas: {len(palabras)}')
